@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Test page</title>
+    </head>
+    <body>
+        <span class="red">{{ foo }}</span>
+        <span> <span>after whitespace</span></span>
+        <p>
+            This is a
+            multiline text
+            with a bunch of whitespace.
+        </p>
+        <svg height="50" width="50">
+            <rect fill="red" height="30" width="20" x="10" y="10">
+
+            </rect>
+        </svg>
+        <f:if condition="text">
+            Just text
+        </f:if>
+        <f:if condition="true">
+            <f:then>
+                then 1
+            </f:then>
+            <f:else>
+                else 1
+            </f:else>
+        </f:if>
+        <f:if condition="">
+            <f:then>
+                then 2
+            </f:then>
+            <f:else>
+                else 2
+            </f:else>
+        </f:if>
+    </body>
+</html>
