@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+    <complexType name="variable" mixed="true">
+        <attribute name="name" type="string" />
+        <attribute name="value" type="string" />
+    </complexType>
+</schema>

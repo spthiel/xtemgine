@@ -1,18 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:f="http://www.w3.org/1999/XSL/Transform"
+      xsi:schemaLocation="xtm/compilerOptions schema/xtm.schema.xsd xtm/f ./schema/f.schema.xsd"
+      xmlns:xtm="xtm/compilerOptions">
     <head>
         <title>Test page</title>
     </head>
     <body>
         <span class="red">{{ foo }}</span>
-        <span> <span>after whitespace</span></span>
+        <span> <span>before whitespace</span> <span>after whitespace</span></span>
         <p>
             This is a
             multiline text
             with a bunch of whitespace.
         </p>
+        <p xtm:whitespace="linebreak">
+            This is a second
+            multiline text
+            with a bunch of whitespace.
+        </p>
+        <p xtm:whitespace="pre">
+            This is a third
+            multiline text
+            with a bunch of whitespace.
+        </p>
+        <f:variable name="height" value="30" />
+        <div />
         <svg height="50" width="50">
-            <rect fill="red" height="30" width="20" x="10" y="10">
+            <rect fill="red" height="{{ height }}" width="20" x="10" y="10">
 
             </rect>
         </svg>
