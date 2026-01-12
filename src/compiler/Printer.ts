@@ -2,38 +2,40 @@ import ParserTextNode from "./parser/ParserTextNode.js";
 import Node from "./parser/Node.js";
 import ParserNode from "./parser/ParserNode.js";
 import UniqueIds from "./UniqueIds.js";
-import Value, {ValueSegment} from "./parser/Value.js";
+import Value from "./parser/Value.js";
 
 function printTree(rootNode: ParserNode) {
-    const nodesToPrint: [string, Node][] = rootNode.children.map(node => ['root', node]);
+    const nodesToPrint: [string, Node][] = rootNode.children.map((node) => ["root", node]);
     const uniqueID = new UniqueIds();
     let out = `const root = api.root();\n`;
-    
+
     while (nodesToPrint.length > 0) {
         const [parentVar, currentNode] = nodesToPrint.shift();
         let nodeName: string = undefined;
-        
+
         if (currentNode instanceof ParserNode) {
-            nodeName = uniqueID.nextID('el');
-            currentNode.children.forEach(child => {
+            nodeName = uniqueID.nextID("el");
+            currentNode.children.forEach((child) => {
                 nodesToPrint.push([nodeName, child]);
             });
         }
-        
+
         let node: string;
-        
+
         if (currentNode instanceof ParserNode) {
             node = createElement(currentNode.name, currentNode.attributes);
-        } else if (currentNode instanceof ParserTextNode){
-            node = createText(currentNode.value)
+        } else if (currentNode instanceof ParserTextNode) {
+            node = createText(currentNode.value);
         } else {
             continue;
         }
-        
+
         out += createAppendStore(nodeName, parentVar, node);
-        out += '\n';
+        out += "\n";
     }
-    
+
+    out += "return root;";
+
     return out;
 }
 
@@ -55,7 +57,7 @@ function createElement(type: string, attributes: Map<string, Value> = new Map())
         hasAny = true;
 
         const value = attributes.get(key);
-        
+
         out += `"${key}": ${createAttribute(value)}`;
     }
 
@@ -70,7 +72,7 @@ function createElement(type: string, attributes: Map<string, Value> = new Map())
 
 function createAttribute(text: Value) {
     if (text.isSimpleString()) {
-        return text.asArray()[0]
+        return `api.createAttribute(${text.asArray()[0]})`;
     }
     return `api.createAttribute(${text.asArray().join(", ")})`;
 }
@@ -85,7 +87,7 @@ function createAppend(appendTo: string, append: string) {
 
 function createAppendStore(outVariableName: string | undefined, appendTo: string, append: string) {
     if (!outVariableName) {
-        return createAppend(appendTo, append)
+        return createAppend(appendTo, append);
     }
     return `const ${outVariableName} = ${createAppend(appendTo, append)}`;
 }
@@ -96,5 +98,5 @@ export default {
     createElement,
     createText,
     createAppendStore,
-    printTree
+    printTree,
 };

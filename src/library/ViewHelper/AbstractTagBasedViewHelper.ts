@@ -32,7 +32,7 @@ export default abstract class AbstractTagBasedViewHelper<A extends Dict<unknown>
 
         if (this.hasArgument("aria")) {
             Object.entries(this.arguments["aria"]).forEach(([key, value]) =>
-                this.tag.setAttribute(`data-${key}`, value.toString()),
+                this.tag.setAttribute(`aria-${key}`, value.toString()),
             );
         }
     }
